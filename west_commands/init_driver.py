@@ -1,11 +1,9 @@
-
 import os
 from west.commands import WestCommand
-from west import log
 
 # Template definitions for scaffolding files
 TEMPLATE_FILES = {
-    "include/drivers/{path}/{name}.h": """
+    "include/drivers/{category}/{name}.h": """
 /*
  * @file
  * @brief Skeleton header for {name} driver
@@ -35,7 +33,7 @@ int {name}_init(const struct device *dev);
 
 #endif /* ZEPHYR_INCLUDE_DRIVERS_{uc_name}_H_ */
 """,
-    "src/{path}/{name}.c": """
+    "src/{name}.c": """
 /*
  * @file
  * @brief Skeleton implementation for {name} driver
@@ -67,10 +65,10 @@ endmenu
 """,
     "CMakeLists.txt": """
 zephyr_library()
-zephyr_library_sources_ifdef(CONFIG_{uc_name} src/{path}/{name}.c)
+zephyr_library_sources_ifdef(CONFIG_{uc_name} src/{name}.c)
 zephyr_library_include_directories(include)
 """,
-    "dts/bindings/{category}/{name}.yaml": """
+    "dts/bindings/{category}/{compatible_file}.yaml": """
 /*
  * Device tree binding for {name} ({compatible})
  */
@@ -114,11 +112,15 @@ def generate_files(info: dict, templates=TEMPLATE_FILES) -> list[tuple[str, str]
     return files
 
 
-def write_files(files: list[tuple[str, str]]):
+def write_files(files: list[tuple[str, str]], path=""):
     """
     Create directories and write each file to disk.
     """
+
     for rel, content in files:
+        rel = os.path.join(path, rel)
+        print(rel)
+
         dirpath = os.path.dirname(rel)
 
         if dirpath:
@@ -126,7 +128,6 @@ def write_files(files: list[tuple[str, str]]):
 
         with open(rel, 'w', newline='\n') as f:
             f.write(content)
-
 
 class DriverInitCommand(WestCommand):
     """Create a Zephyr driver skeleton."""
@@ -166,13 +167,16 @@ class DriverInitCommand(WestCommand):
         info['path'] = ask_value(args, 'path', 'Driver path', f"drivers/{info['name']}")
 
         # normalize additional fields
-        info['category'] = info['bus']
+        # extract the sub‐directory under "drivers", e.g. "rtc" from "drivers/rtc/mcp7940mt"
+        info['category'] = info['path'].split(os.sep)[1]
         info['uc_name'] = info['name'].upper()
         info['bus_upper'] = info['bus'].upper()
+        # filename for the DT binding: comma → underscore
+        info['compatible_file'] = info['compatible'].replace(',', '_')
 
         # generate and write files
         files = generate_files(info)
-        write_files(files)
+        write_files(files, info['path'])
 
         self.inf("Driver scaffold complete. Next steps:")
         self.inf("  - Add CONFIG_%s=y to your prj.conf", info['uc_name'])
