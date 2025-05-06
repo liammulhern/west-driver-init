@@ -5,7 +5,6 @@ Scaffold Zephyr RTOS drivers via `west driver init`
 ## Purpose
 
 `west-driver-init` is a West extension that streamlines the creation of a new Zephyr driver by generating a complete directory structure and file stubs (header, source, Kconfig, CMakeLists, DTS binding). 
-It helps maintain consistency and follows Zephyr’s best practices.
 
 ## Features
 
@@ -22,6 +21,7 @@ It helps maintain consistency and follows Zephyr’s best practices.
 ## Installation
 
 1. **Clone or reference via West manifest**
+
    Add this to your workspace’s `.west.yml`:
 
    ```yaml
