@@ -1,5 +1,5 @@
 west-commands:
-  - file: west/init_driver.py
+  - file: west_commands/init_driver.py
     commands:
       - name: driver
         class: DriverInitCommand
