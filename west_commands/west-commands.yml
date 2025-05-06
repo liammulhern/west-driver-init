@@ -3,4 +3,4 @@ west-commands:
     commands:
       - name: driver
         class: DriverInitCommand
-        help: Custome driver init tools for west framework.
+        help: Custom driver init tools for west framework.
