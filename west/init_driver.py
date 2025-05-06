@@ -84,7 +84,6 @@ zephyr_library_include_directories(include)
 """
 }
 
-
 class DriverInitCommand(WestCommand):
     """Create a Zephyr driver skeleton."""
 
@@ -124,7 +123,7 @@ class DriverInitCommand(WestCommand):
         info['name']       = ask('name', 'Driver name', 'my_driver')
         info['compatible'] = ask('compatible', 'Compatible string', 'vendor,dev')
         info['bus']        = ask('bus', 'Bus type', 'i2c')
-        info['path']       = ask('path', 'Driver path', f"drivers/{info['bus']}/{info['name']}")
+        info['path']       = ask('path', 'Driver path', f"drivers/{info['name']}")
 
         # normalize
         info['category'] = f"{info['bus']}"

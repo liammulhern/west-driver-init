@@ -1,6 +1,6 @@
 west-commands:
   - file: west/init_driver.py
     commands:
-      - name: driver init
+      - name: driver
         class: DriverInitCommand
         help: Custome driver init tools for west framework.
