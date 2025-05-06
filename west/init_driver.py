@@ -29,7 +29,7 @@ extern "C" {{
 int {name}_init(const struct device *dev);
 
 #ifdef __cplusplus
-}
+}}
 #endif
 
 #endif /* ZEPHYR_INCLUDE_DRIVERS_{uc_name}_H_ */

@@ -43,12 +43,6 @@ Scaffold Zephyr RTOS drivers via `west driver init`
    west update
    ```
 
-3. **Install the extension**
-
-   ```bash
-   pip install -e modules/west-driver-init
-   ```
-
 ## Usage
 
 ```
