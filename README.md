@@ -31,8 +31,10 @@ Scaffold Zephyr RTOS drivers via `west driver init`
          url-base: https://github.com/liammulhern
      projects:
        - name: west-driver-init
-         repo-path: modules/west-driver-init
+         remote: liammulhern
+         path: modules/west-driver-init
          revision: main
+         west-commands: west/west-commands.yml
    ```
 
 2. **Fetch and update**

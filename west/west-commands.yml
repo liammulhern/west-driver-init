@@ -1,0 +1,6 @@
+west-commands:
+  - file: west/init_driver.py
+    commands:
+      - name: espressif
+        class: DriverInitCommand
+        help: Custome driver init tools for west framework.
